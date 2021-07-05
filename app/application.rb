@@ -1,6 +1,18 @@
 class Application
 
   @@items = ["Apples","Carrots","Pears"]
+  @@cart = []
+
+  def self.cart(env)
+    resp = Rack::Response.new
+    req = Rack::Request.new(env)
+
+    if req.path.match(/cart/)
+      @@cart.each do |cart|
+        resp.write "#{cart}\n"
+      end
+    @@cart << self
+  end
 
   def call(env)
     resp = Rack::Response.new
